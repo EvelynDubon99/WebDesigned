@@ -2,6 +2,7 @@
 .white{
     color: white;
     font-size:100%;
+    padding:0px;
 }
 [id]{
     font-size: 125%;
