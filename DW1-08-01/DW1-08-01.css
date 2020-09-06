@@ -1,6 +1,8 @@
 
 .white{
-    color: white;}
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
 [id]{
     font-size: 125%;
     margin: 0;
