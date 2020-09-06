@@ -1,7 +1,10 @@
 
 .white{
     color: white;
+
     font-size:100%;
+
+    font-family: 'Courier New', Courier, monospace;
 }
 [id]{
     font-size: 125%;
