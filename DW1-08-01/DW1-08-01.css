@@ -1,6 +1,14 @@
 
 .white{
     color: white;
+<<<<<<< HEAD
+=======
+    font-family: Arial;
+    margin: 0px;
+
+    font-size:100%;
+    padding:0px;
+>>>>>>> 1e15aa9837cb0ef87b6d227b22aebfa5f7a0d59e
 }
 [id]{
     font-size: 125%;
