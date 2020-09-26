@@ -1,0 +1,135 @@
+#n1{
+  color: black;
+  background-color:white;
+}
+figure {
+  position: relative;
+  width: 310px;
+  height: 310px;
+}
+figure img {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.2);
+}
+figure .back {
+  position: absolute;
+  top: 40px;
+  left: -40px;
+  width: 100%;
+  height: 100%;
+  background-color: #f6cd61;
+  z-index: -1;
+}
+.food_about{
+  padding:80px;
+}
+
+.overlay {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+.site_heading {
+  font-family: "Merienda";
+  color: #fff;
+  font-size: 100px;
+  font-weight: bold;
+}
+.mb_auto {
+  margin-bottom: auto;
+}
+
+.valign_wrapper {
+  text-align: center;
+}
+
+.site_subheading {
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: 6px;
+}
+.food_header {
+  width: 100%;
+  height: 600px;
+  background-image: url("../img/IMG_9692.jpeg");
+  clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+}
+.line-space {
+  line-height: 40px;
+}
+#f{
+  background-color: black;
+  color: #fff;
+}
+#primary {
+  color: #fff;
+  background-color: #1a1c20 ;
+  border-color: #1a1c20;
+}
+#l{
+  background-color:  #f6cd61 !important;
+}
+
+.navbar-dark .navbar-brand {
+  color:black !important;
+}
+
+.navbar-dark .navbar-nav .active>.nav-link, .navbar-dark .navbar-nav .nav-link.active, .navbar-dark .navbar-nav .nav-link.show, .navbar-dark .navbar-nav .show>.nav-link {
+  color: black !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.76) !important;
+}
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+  -ms-flex-align: center;
+  align-items: center;
+}
+.form-signin .checkbox {
+  font-weight: 400;
+}
+.form-signin .form-control {
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
+}
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+#navbar{
+  background-color: #f6cd61;
+}
+#form{
+  background-color: #f6cd61;
+}
+.text-info{
+  color: black !important;
+}
+
+.card-body{
+  align-items: right !important;
+}
+
+
+/*# sourceMappingURL=style.css.map */
