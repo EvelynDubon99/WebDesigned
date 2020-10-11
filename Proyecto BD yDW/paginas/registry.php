@@ -17,7 +17,7 @@ if(isset($_POST['crear'])){
   $telefono = $_POST['telefono'];
   $direccion = $_POST['direccion'];
   $mysqli->query("INSERT INTO usuario( ID_role, nombre , usuario ,apellido, correo, contraseña, telefono, direccion) 
-  VALUES('".$ID_role."','".$nombre."','".$usuario."','".$apellido."','".$correo."','".$contraseña."','".$telefono."','".$direccion."')")
+  VALUES( '3','".$nombre."','".$usuario."','".$apellido."','".$correo."','".$contraseña."','".$telefono."','".$direccion."')")
   or die($mysqli->error);
 
   header("Location: Home.html");
@@ -70,7 +70,7 @@ if(isset($_POST['crear'])){
                     <h1 class="h4 mb-4 font-weight-normal"> Registro</h1>
                         
                     <hr>
-                        <input type="hidden" name="ID_role" class="form-control" value="3">
+                        
                         <label  class="sr-only" >Nombre</label>
                         <input type="nombre"  name="nombre"class="form-control" placeholder="Nombre" required="" autofocus="">
                         <br>
