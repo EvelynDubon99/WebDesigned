@@ -1,9 +1,32 @@
+<?php 
+  include '../conexion/conexion.php';
+  session_start();
+
+  
+
+  if(isset($_POST['usuario']) && isset($_POST['contraseña'])){
+      $usuario=$_POST['usuario'];
+      $contraseña=$_POST['contraseña'];
+      $resultado=$mysqli->query("SELECT * FROM usuario WHERE usuario = '".$usuario."' AND contraseña = '".$contraseña."'");
+      
+      $row = mysqli_fetch_assoc($resultado);
+      if($row == true){
+        $_SESSION['rol']=$row['ID_role'];
+        $_SESSION['ID']=$row['ID_user'];
+        header('location: auxiliar.php');
+      }else{
+        echo "el usuario o contrseña no existe";
+      }
+
+  }
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>Login</title>
   
-    <link href="./sass/style.css" rel="stylesheet">
+    <link href="../sass/style.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -15,16 +38,16 @@
   
   <body class="text-center">
     <header >
-      <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
           <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-            <div class="navbar-nav"> <a class="nav-item nav-link active" href="./Home.html">About Us <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="./Index.html">Login</a> <a class="nav-item nav-link" href="./registry.html">Registry</a>
-                <a class="nav-item nav-link disabled" href="#">Disabled</a> </div> </div> </nav>
+            <div class="navbar-nav"> <a class="nav-item nav-link active" href="./Home.html">Home <span class="sr-only">(current)</span></a> 
+               <a class="nav-item nav-link" href="./about.html">About</a> <a class="nav-item nav-link" href="#">Menu</a>
+                <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
     </header>
    
     
-    <section id="n1">
+    <section id="n1" style="background-image: url('../img/bg_8.1.jpg') !important; " >
         <br>
         <br>
         <br>
@@ -33,15 +56,15 @@
                 <div class="col-4">
                 </div>
                 <div class="col-4">
-                    <form class="form-signin" id="form">
-                        <img src="./img/Logo.JPG" alt=80px width="80px">
+                    <form action="login.php" class="form-signin" method="post"id="form">
+                        <img src="../img/Logo.JPG" alt=80px width="80px" >
                          <h1 class="h3 mb-3 font-weight-normal"> Login</h1>
                         <hr>
                         <label for="inputuser" class="sr-only" >Usuario</label>
-                        <input type="Usuario" id="inputuser" class="form-control" placeholder="Usuario" required="" autofocus="" >
+                        <input type="Usuario" name= "usuario" id="inputuser" class="form-control" placeholder="Usuario" required="" autofocus="" >
                         <br>
                         <label for="inputPassword" class="sr-only"  >Contraseña</label>
-                        <input type="Contraseña" id="inputPassword" class="form-control" placeholder="Contraseña" required="" >
+                        <input type="password" name= "contraseña"  id="inputPassword" class="form-control" placeholder="Contraseña" required="" autofocus=""  >
                         <div class="checkbox mb-3">
                           <label>
                             <input type="checkbox" value="remember-me"> Recordar
@@ -50,7 +73,7 @@
                         <button class="btn btn-lg btn-primary btn-block" type="submit" id="primary">Iniciar sesion</button>
                         <p class="text-center">
                             <br>
-                            <a id="headerWhite" href="./registry.html">Crear cuenta</a>
+                            <a id="headerWhite" href="registry.php">Crear cuenta</a>
                       </form>
                       <br>
                       

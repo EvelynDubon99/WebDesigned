@@ -1,47 +1,14 @@
 
-#n1{
-    color: black;
-    background-color: #581c0c;
-}
-#primary {
-    color: #fff;
-    background-color: #581c0c ;
-    border-color: #581c0c ;
-}
-.form-signin {
-    width: 100%;
-    max-width: 330px;
-    padding: 15px;
-    margin: auto;
-    -ms-flex-align: center;
-    align-items: center;
-}
-.form-signin .checkbox {
-    font-weight: 400;
-}
-.form-signin .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
-}
-.form-signin .form-control:focus {
-    z-index: 2;
-}
-.form-signin input[type="email"] {
-    margin-bottom: -1px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-}
-#navbar{
-    background-color: #e8f1f5;
-}
-#form{
-    background-color: #e8f1f5;
+.menu {
+    list-style-type: none;
+    &_item {
+        display: flex;
+        justify-content: space-between;
+        color: #707070;
+        line-height: 50px;
+    }
+
+    &_price {
+        color: $primary-color;
+    }
 }

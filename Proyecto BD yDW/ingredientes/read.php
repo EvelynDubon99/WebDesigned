@@ -1,28 +1,29 @@
-
-<?php
-    include "conexion.php";
-    
-
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $ID_ingredientes = $_POST['ID_ingredientes'];
-        $ID_status = $_POST['ID_status'];
-        $Cantidad = $_POST['Cantidad'];
-        $stmt=$pdo->query("UPDATE ingredientes SET ID_status = '".$ID_status."' , Cantidad = '".$Cantidad."' 
-        WHERE ID_ingredientes = '".$ID_ingredientes."' ");   
-          if($_POST){
-            header("Location: ingredinetes.php");
-          }
-  
+<?php 
+include '../conexion/conexion.php';
+session_start();
+if(!isset($_SESSION['rol'])){
+  header('location: /Intento/paginas/login.php');
+}else{
+  if($_SESSION['rol'] !=2 && $_SESSION['rol'] !=1){
+    header('location: /Intento/paginas/login.php');
+  }
+}
+    if(isset($_GET['read'])){
+        $ID_ingredientes=$_GET['read'];
+        $result = $mysqli->query("SELECT * FROM ingredientes WHERE ID_ingredientes =$ID_ingredientes ")
+        or die($mysqli->error);    
     }
+
+    while ($row = mysqli_fetch_assoc($result)){
    
-      
 ?>
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>Read_ingredientes</title>
+  
+    <link href="../sass/style.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="./sass/style.css" rel="stylesheet">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -30,52 +31,72 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   </head>
+  
   <body class="text-center">
-    <header >
-      <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+    <header>
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
           <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-            <div class="navbar-nav"> <a class="nav-item nav-link active" href="#">Ingredientes <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="./Index.html">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
+            <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
+               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
+                
+              <nav>
+                <div class ="container-fluid">
+                  <div class="row justify-content-center">
+                    <div class= "col-md-10">
+                      <h3 class="text-center mt-2"> Datos ingredientes </h3>
+                      <hr>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+
     </header>
-   
-    
 <section id="n1">
       <br>
       <br>
       <br>
     <div class="container">
         <div class="row">
-            <div class="col-4">
+        <div class="col-12">
             </div>
-            <div class="col-4">
-                <form action="" method="post" class="form-signin" id="form">
-                    <h3 class="text-center"> Actualizar Ingredientes </h3>
-                    <hr>
-                    <input type="hidden" name="ID_ingredientes" id="ID_ingredientes" value="<?php $key = $_GET['id']; echo $key; ?>">
-                    <label class="sr-only">ID_status</label>
-                    <input type="text" name="ID_status" id="ID_status" placeholder=" ID Status">
-                    <br>
-                    <br>
-                    <label class="sr-only">Cantidad</label>
-                    <input type="text" name="Cantidad" id="Cantidad" placeholder="Cantidad">
-                    <br>
-                    <br>
-                    
-                    <input type="submit" name="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block" id="primary">
-                </from>
-                <br>
-            </div>
-            <div class="col-4">
+            <div class="col-12">
+
+                <table class="table table-bordered table-hover" id="form2">
+            <thead>
+                <tr>
+                  <th>ID_ingredientes</th>
+                  <th>ID_status</th>
+                  <th>Nombre</th>
+                  <th>Cantidad</th>
+                  <th>Descripcion</th>
+                </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><?php echo $row['ID_ingredientes']?></td>
+                <td><?php echo $row['ID_status']?></td>
+                <td><?php echo $row['Nombre']?></td>
+                <td><?php echo $row['Cantidad']?></td>
+                <td><?php echo $row['Descripcion']?></td>
+                <td>
+                
+                </td>
+              </tr>
+            </tbody>
                
-        </div>
-    </div>
-    </div>
-</section>
-<br>
-<br>
-<footer class="page-footer font-small mdb-color pt-4" id="f">
+            </table>
+                    
+            <a href="ingredientes.php " class="btn btn-info" id="primary">Regresar</a>
+    <?php }?>
+                
+            </div>
+    </section>
+
+    <br>
+            <footer class="page-footer font-small mdb-color pt-4" id="f">
 
 <!-- Footer Links -->
 <div class="container text-center text-md-left">
@@ -137,3 +158,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
+

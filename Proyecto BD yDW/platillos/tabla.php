@@ -1,16 +1,17 @@
-<?php
-require_once 'conexion.php';
-
-?>
-
-
-
+<?php session_start();
+if(!isset($_SESSION['rol'])){
+  header('location: /Intento/paginas/login.php');
+}else{
+  if($_SESSION['rol'] !=2 && $_SESSION['rol'] !=1){
+    header('location: /Intento/paginas/login.php');
+  }
+}?>
 <!doctype html>
 <html lang="en">
   <head>
-    <title>Ingredinetes</title>
+    <title>Detalle</title>
   
-    <link href="./sass/style.css" rel="stylesheet">
+    <link href="../sass/style.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -22,17 +23,18 @@ require_once 'conexion.php';
   
   <body class="text-center">
     <header>
-      <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
           <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-            <div class="navbar-nav"> <a class="nav-item nav-link active" href="#">Ingredientes <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="./Index.html">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
+            <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
+               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
+                
               <nav>
                 <div class ="container-fluid">
                   <div class="row justify-content-center">
                     <div class= "col-md-10">
-                      <h3 class="text-center mt-2"> Ingredientes </h3>
+                      <h3 class="text-center mt-2"> Datos Ingredientes </h3>
                       <hr>
                     </div>
                   </div>
@@ -40,39 +42,15 @@ require_once 'conexion.php';
               </nav>
 
     </header>
-   
-    
-    <section id="n1">
-      <div class= "container">  
-      <div class="row">
-          <div class="col-md-4">
-          <form action="insert.php" method="post" class="form-signin" id="form">
-                <h3 class="text-center"> Agregar Ingredientes </h3>
-                <hr>
-                <label class="sr-only">ID_status</label>
-                <input type="text" name="ID_status" id="ID_status" placeholder="Agregar ID Status">
-                <br>
-                <br>
-                <label class="sr-only">Nombre</label>
-                <input type="text" name="Nombre" id="Nombre" placeholder="Nombre">
-                <br>
-                <br>
-                <label class="sr-only">Cantidad</label>
-                <input type="text" name="Cantidad" id="Cantidad" placeholder="Cantidad">
-                <br>
-                <br>
-                <label class="sr-only">Descripcion</label>
-                <input type="text" name="Descripcion" id="Descripcion" placeholder="Descripcion">
-                <br>
-                <br>
-                <input type="submit" name="submit" value="Añadir" class="btn btn-lg btn-primary btn-block" id="primary">
-            </from>
-          </div>
 
-          <div class="col-md-8">
-          <h3 class="text-center"> Ingredientes Completos </h3>
-          <div class=" table-responsive-md">
-            <table class="table table-bordered table-hover">
+<section id="n1">
+      <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            </div>
+            <div class="col-12">
+                <table class="table table-bordered table-hover" id="form">
             <thead>
                 <tr>
                   <th>ID_ingredientes</th>
@@ -80,33 +58,35 @@ require_once 'conexion.php';
                   <th>Nombre</th>
                   <th>Cantidad</th>
                   <th>Descripcion</th>
-                  <th>Accion</th>
                 </tr>
             </thead>
+            <?php 
+                include '../conexion/conexion.php';
+                $result = $mysqli->query("SELECT * FROM ingredientes") or die($mysqli->error);
+                while ($row = mysqli_fetch_assoc($result)){
+            ?>
             <tbody>
-              <?php while($row = $stmt->fetch()){
-              ?>
-              <tr>
-                <td><?php echo $row['ID_ingredientes']?></td>
-                <td><?php echo $row['ID_status']?></td>
-                <td><?php echo $row['Nombre']?></td>
-                <td><?php echo $row['Cantidad']?></td>
-                <td><?php echo $row['Descripcion']?></td>
-                <td>
-                <a href="update.php?id=<?php echo $row['ID_ingredientes']?> " class="btn btn-secondary">Edit</a>
-                <a href="delet.php?id=<?php echo $row['ID_ingredientes']?>" class="btn btn-danger">Delete</a>
-                </td>
-              </tr>
-              <?php } ?>
+                <tr>
+                    <td><?php echo $row['ID_ingredientes']?></td>
+                    <td><?php echo $row['ID_status']?></td>
+                    <td><?php echo $row['Nombre']?></td>
+                    <td><?php echo $row['Cantidad']?></td>
+                    <td><?php echo $row['Descripcion']?></td>
+                </tr>
             </tbody>
+            <?php }?>
+               
             </table>
-          </div>
+            <a href="platillos.php" class="btn btn-lg btn-primary btn-block" id="primary">Regresar</a>
+                    
 
-          </div>      
-        </div>
-        <br>
+    
+    
+                <br>
+            </div>
     </section>
-  <footer class="page-footer font-small mdb-color pt-4" id="f">
+
+    <footer class="page-footer font-small mdb-color pt-4" id="f">
 
       <!-- Footer Links -->
       <div class="container text-center text-md-left">
@@ -168,3 +148,4 @@ require_once 'conexion.php';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   </body>
 </html>
+

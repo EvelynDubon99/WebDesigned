@@ -1,9 +1,43 @@
+<?php include '../conexion/conexion.php';
+if(isset($_POST['crear'])){
+  $ID_role =$_POST['ID_role'];
+  $nombre = $_POST['nombre'];
+  $usuario = $_POST['usuario'];
+  $result=$mysqli->query("SELECT * FROM usuario WHERE usuario = '".$usuario."'");
+  if(mysqli_num_rows($result)>0){
+    echo '<script type="text/javascript">
+    alert("Usuario repetido");
+    window.location.href="registry.php";
+    </script>';
+
+  }
+  $apellido = $_POST['apellido'];
+  $correo = $_POST['correo'];
+  $contraseña = $_POST['contraseña'];
+  $telefono = $_POST['telefono'];
+  $direccion = $_POST['direccion'];
+  $mysqli->query("INSERT INTO usuario( ID_role, nombre , usuario ,apellido, correo, contraseña, telefono, direccion) 
+  VALUES('".$ID_role."','".$nombre."','".$usuario."','".$apellido."','".$correo."','".$contraseña."','".$telefono."','".$direccion."')")
+  or die($mysqli->error);
+
+  header("Location: Home.html");
+
+}else{
+ 
+}
+
+
+//Verificar que el usuario se repita
+
+
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
     <title>Title</title>
     <!-- Custom styles for this template -->
-    <link href="./sass/style.css" rel="stylesheet">
+    <link href="../sass/style.css" rel="stylesheet">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,16 +47,16 @@
   </head>
   <body class="text-center">
     <header >
-      <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
           <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-            <div class="navbar-nav"> <a class="nav-item nav-link active" href="./Home.html">About Us <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="./Index.html">Login</a> <a class="nav-item nav-link" href="./registry.html">Registry</a>
-                <a class="nav-item nav-link disabled" href="#">Disabled</a> </div> </div> </nav>
+            <div class="navbar-nav"> <a class="nav-item nav-link active" href="./Home.html">Home <span class="sr-only">(current)</span></a> 
+               <a class="nav-item nav-link" href="./about.html">About</a> <a class="nav-item nav-link" href="#">Menu</a>
+                <a class="nav-item nav-link disabled" href="#"></a> </div> </div>
     </header>
    
     
-    <section id="n1">
+    <section id="n1" style="background-image: url('../img/bg_7.jpg') !important; ">
       <br>
       <br>
       <br>
@@ -31,29 +65,34 @@
             <div class="col-4">
             </div>
             <div class="col-4">
-                <form class="form-signin" id="form">
-                    <img src="./img/Logo.JPG" alt=80px width="80px">
+                <form class="form-signin" id="form" action="registry.php" method="POST">
+                    <img src="../img/Logo.JPG" alt=80px width="80px">
                     <h1 class="h4 mb-4 font-weight-normal"> Registro</h1>
+                        
                     <hr>
-                        <label for="inputNombre" class="sr-only" >Nombre</label>
-                        <input type="Nombre" id="inputNombre" class="form-control" placeholder="Nombre" required="" autofocus="">
+                        <input type="hidden" name="ID_role" class="form-control" value="3">
+                        <label  class="sr-only" >Nombre</label>
+                        <input type="nombre"  name="nombre"class="form-control" placeholder="Nombre" required="" autofocus="">
                         <br>
-                        <label for="inputApellido" class="sr-only" >Apellido</label>
-                        <input type="Apellido" id="inputApellido" class="form-control" placeholder="Apellido" required="" autofocus="">
+                        <label  class="sr-only" >Usuario</label>
+                        <input type="Usuario"  name="usuario"class="form-control" placeholder="Usuario" required="" autofocus="">
                         <br>
-                        <label for="inputCorreo" class="sr-only" >Correo</label>
-                        <input type="Correo" id="inputCorreo" class="form-control" placeholder="Correo" required="" autofocus="">
+                        <label  class="sr-only" >Apellido</label>
+                        <input type="apellido"  name="apellido" class="form-control" placeholder="Apellido" required="" autofocus="">
                         <br>
-                        <label for="inputTelefono" class="sr-only" >Teléfono</label>
-                        <input type="Telefono" id="inputTelefono" class="form-control" placeholder="Telefono" required="" autofocus="">
+                        <label  class="sr-only" >Correo</label>
+                        <input type="correo" name="correo" class="form-control" placeholder="Correo" required="" autofocus="">
                         <br>
-                        <label for="inputContraseña" class="sr-only" >Contraseña</label>
-                        <input type="Contraseña" id="inputContraseña" class="form-control" placeholder="Contraseña" required="" autofocus="">
+                        <label  class="sr-only" >Contraseña</label>
+                        <input type="password" name="contraseña" class="form-control" placeholder="Contraseña" required="" autofocus="">
                         <br>
-                        <label for="inputDireccion" class="sr-only" >Dirección</label>
-                        <input type="Direccion" id="inputDireccion" class="form-control" placeholder="Direccion" required="" autofocus="">
+                        <label  class="sr-only" >Teléfono</label>
+                        <input  type="number" name="telefono" class="form-control" placeholder="Teléfono" required="" autofocus="">
                         <br>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit" id="primary"> Crear</button>
+                        <label  class="sr-only" >Dirección</label>
+                        <input type="direccion" name="direccion" class="form-control" placeholder="Direccion" required="" autofocus="">
+                        <br>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit" name="crear" id="primary"> Crear</button>
                       
                 </form> 
                 <br>

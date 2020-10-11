@@ -1,21 +1,31 @@
-<?php
-include "conexion.php";
-if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $ID_ingredientes = $_POST['ID_ingredientes'];
-    $stmt=$pdo->query("DELETE FROM ingredientes WHERE ID_ingredientes = '".$ID_ingredientes."' ");
-    
-    if($_POST){
-        header("Location: ingredinetes.php");
+<?php 
+include '../conexion/conexion.php';
+session_start();
+if(!isset($_SESSION['rol'])){
+  header('location: /Intento/paginas/login.php');
+}else{
+  if($_SESSION['rol'] !=2 && $_SESSION['rol'] !=1){
+    header('location: /Intento/paginas/login.php');
+  }
+}
+error_reporting (E_ALL ^ E_NOTICE);
+
+    if(isset($_GET['edit'])){
+        $ID_platillo=$_GET['edit'];
+        $result = $mysqli->query("SELECT * FROM platillo WHERE ID_platillo =$ID_platillo ")
+        or die($mysqli->error);    
     }
 
-}
+    while ($row = mysqli_fetch_assoc($result)){
+   
 ?>
+
 <!doctype html>
 <html lang="en">
   <head>
     <title>Title</title>
     <!-- Custom styles for this template -->
-    <link href="./sass/style.css" rel="stylesheet">
+    <link href="../sass/style.css" rel="stylesheet">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,11 +35,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   </head>
   <body class="text-center">
     <header >
-      <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
           <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-            <div class="navbar-nav"> <a class="nav-item nav-link active" href="#">Ingredientes <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="./Index.html">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
+            <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
+               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
     </header>
    
@@ -43,15 +53,45 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class="col-4">
             </div>
             <div class="col-4">
-                <form action="" method="post" class="form-signin" id="form">
-                    <h3 class="text-center"> Eliminar Ingredientes </h3>
+                <form action="" method="" class="form-signin" id="form">
+                    <h3 class="text-center"> Actualizar Platillos </h3>
                     <hr>
-                    <input type="hidden" name="ID_ingredientes" id="ID_ingredientes" value="<?php $key = $_GET['id']; echo $key; ?>">
-                   
-                    <input type="submit" name="submit" value="Eliminar" class="btn btn-lg btn-primary btn-block" id="primary">
+                    <input type="hidden" name="ID_platillo" id="ID_platillo" value="<?php echo $row['ID_platillo']; ?>">
+                    <label class="sr-only">ID_status</label>
+                    <input type="text" name="ID_status" id="ID_status" value="<?php echo $row['ID_status']; ?>" class="form-control" placeholder=" ID Status">
+                    <br>
+                    <br>
+                    <label class="sr-only">Precio</label>
+                    <input type="text" name="precio" id="Precio" value="<?php echo $row['precio']; ?>" class="form-control" placeholder="precio">
+                    <br>
+                    <br>
+                    <label class="sr-only">Detalle</label>
+                    <input type="text" name="detalle" id="Detalle" value="<?php echo $row['detalle']; ?>" class="form-control" placeholder="Detalle">
+                    <br>
+                    <br>
+                    
+                    <input type="submit" name="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block" id="primary">
                 </from>
+    <?php 
+  }?>
                 <br>
             </div>
+            <?php
+                    
+                    $ID_platillo= $_GET['ID_platillo'];
+                    $ID_status =$_GET['ID_status'];
+                    $precio =$_GET['precio']; 
+                    $detalle =$_GET['detalle']; 
+                    if($ID_status!=null || $precio!=null || $detalle!=null){
+                        $result = $mysqli->query("UPDATE platillo SET ID_status = '".$ID_status."' , precio = '".$precio."', detalle = '".$detalle."'
+                        WHERE ID_platillo = '".$ID_platillo."'");
+                        if ($ID_status=1){
+                            header("Location: platillos.php");
+                        }
+                        }       
+               
+                
+                ?>
             <div class="col-4">
                
         </div>

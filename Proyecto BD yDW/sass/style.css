@@ -2,6 +2,10 @@
   color: black;
   background-color:white;
 }
+#photo_menu{
+  alt: 150px;
+  width: 150px;
+}
 figure {
   position: relative;
   width: 310px;
@@ -25,7 +29,10 @@ figure .back {
   padding:80px 0;
 }
 
-
+.align-items-center {
+  -webkit-box-align: center !important;
+  -ms-flex-align: center !important;
+  align-items: center !important; }
 
 .overlay {
   display: flex;
@@ -50,6 +57,8 @@ figure .back {
   text-align: center;
 }
 
+
+
 .site_subheading {
   font-size: 20px;
   color: #fff;
@@ -57,7 +66,7 @@ figure .back {
 }
 .header {
   width: 100%;
-  height: 600px;
+  height: 500px;
   background-image: url("../img/IMG_9692.jpeg");
   clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
 }
@@ -102,6 +111,17 @@ figure .back {
   border-radius: 27px;
   transition: 0.4s all;
 }
+
+.offer-btn2 {
+  display: inline-block;
+  text-decoration: none;
+  color:#fff;
+  background-color: #ffa931;
+  padding: 10px 25px;
+  margin-top: 15px;
+  border-radius: 27px;
+  transition: 0.4s all;
+}
 .offer-btn:hover {
   background-color:#f6cd61;
   color: #fff;
@@ -117,7 +137,7 @@ figure .back {
   line-height: 50px;
 }
 .menu_price {
-  color: #f6cd61;
+  color:#c57f1e;
 }
 
 .navbar-dark .navbar-brand {
@@ -132,9 +152,10 @@ figure .back {
   color: rgba(0, 0, 0, 0.76) !important;
 }
 .form-signin {
-  width: 100%;
-  max-width: 330px;
+  width: 120%;
+  max-width: 700px;
   padding: 15px;
+  border: 3px solid #555;
   margin: auto;
   -ms-flex-align: center;
   align-items: center;
@@ -152,22 +173,17 @@ figure .back {
 .form-signin .form-control:focus {
   z-index: 2;
 }
-.form-signin input[type="email"] {
-  margin-bottom: -1px;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-}
-.form-signin input[type="password"] {
-  margin-bottom: 10px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
 #navbar{
   background-color: #f6cd61;
 }
 #form{
   background-color: #f6cd61;
 }
+
+#form2{
+  background-color: #e8e8e8;
+}
+
 .text-info{
   color: black !important;
 }
