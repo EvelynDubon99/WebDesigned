@@ -83,7 +83,7 @@
               <p class="food_offer_subheading">
                 the best tradicional and homely food
               </p>
-              <a href="menu.html" class="offer-btn">Order Now</a>
+              <a href="menu.php" class="offer-btn">Order Now</a>
             </div>
           </div>
         </div>
