@@ -1,0 +1,139 @@
+.navbar-brand {
+  color: black;
+}
+
+#narv {
+  background-image: url("../img/menu.png");
+}
+
+.custom-toggler.navbar-toggler {
+  border-color: black;
+}
+
+.navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.76);
+}
+
+.valign_wrapper {
+  text-align: center;
+}
+
+.offer-btn {
+  display: inline-block;
+  text-decoration: none;
+  color: #f6cd61;
+  background-color: #fff;
+  padding: 10px 25px;
+  margin-top: 15px;
+  border-radius: 27px;
+  -webkit-transition: 0.4s all;
+  transition: 0.4s all;
+}
+
+.offer-btn2 {
+  display: inline-block;
+  text-decoration: none;
+  color: #fff;
+  background-color: #ffa931;
+  padding: 10px 25px;
+  margin-top: 15px;
+  border-radius: 27px;
+  -webkit-transition: 0.4s all;
+  transition: 0.4s all;
+}
+
+.offer-btn:hover {
+  background-color: #f6cd61;
+  color: #fff;
+}
+
+#n1 {
+  color: black;
+  background-color: #fff;
+}
+
+.about {
+  padding: 80px 0;
+}
+
+.align-items-center {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.overlay {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.site_heading {
+  font-family: "Merienda";
+  color: #fff;
+  font-size: 100px;
+  font-weight: bold;
+}
+
+.mb_auto {
+  margin-bottom: auto;
+}
+
+.site_subheading {
+  font-size: 20px;
+  color: #fff;
+  letter-spacing: 6px;
+}
+
+.header {
+  width: 100%;
+  height: 500px;
+  background-image: url("../img/IMG_9692.jpeg");
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+          clip-path: polygon(0 0, 100% 0, 100% 80%, 0% 100%);
+}
+
+.line-space {
+  line-height: 40px;
+}
+
+#f {
+  background-color: black;
+  color: #fff;
+}
+
+#primary {
+  color: #fff;
+  background-color: #1a1c20;
+  border-color: #1a1c20;
+}
+
+#l {
+  background-color: #f6cd61;
+}
+
+#navbar {
+  background-color: #f6cd61;
+}
+
+.text-info {
+  color: black;
+}
+
+.card-body {
+  -webkit-box-align: right;
+      -ms-flex-align: right;
+          align-items: right;
+}
+/*# sourceMappingURL=base.css.map */

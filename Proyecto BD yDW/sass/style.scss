@@ -1,14 +1,5 @@
 
-.menu {
-    list-style-type: none;
-    &_item {
-        display: flex;
-        justify-content: space-between;
-        color: #707070;
-        line-height: 50px;
-    }
-
-    &_price {
-        color: $primary-color;
-    }
-}
+@import "../sass/menu.scss" ; 
+@import "../sass/figure.scss";
+@import "../sass/base.scss";
+@import "../sass/form.scss";

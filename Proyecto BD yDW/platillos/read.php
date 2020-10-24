@@ -1,12 +1,5 @@
 <?php 
-session_start();
-if(!isset($_SESSION['rol'])){
-  header('location: /Intento/paginas/login.php');
-}else{
-  if($_SESSION['rol'] !=2 && $_SESSION['rol'] !=1){
-    header('location: /Intento/paginas/login.php');
-  }
-}
+require_once '../permisos/permiso.php';
 
 ?>
 
@@ -27,9 +20,9 @@ if(!isset($_SESSION['rol'])){
   
   <body class="text-center">
     <header>
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
+    <nav class="navbar navbar-expand-xl navbar_intems " id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+          <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
                <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
@@ -69,9 +62,7 @@ if(!isset($_SESSION['rol'])){
 include '../conexion/conexion.php';
     if(isset($_GET['read'])){
         $ID_platillo=$_GET['read'];
-        $result = $mysqli->query("SELECT d.ID_ingredientes,  i.Nombre, d.cantidad,d.ID_platillo, p.nombre, p.detalle, p.precio 
-        FROM ingredientes i INNER JOIN detalle_platillo d on i.ID_ingredientes = d.ID_ingredientes
-        inner join platillo p on p.ID_platillo=d.ID_platillo where p.ID_platillo = p.ID_platillo")
+        $result = $mysqli->query("SELECT * FROM leer where ID_platillo = $ID_platillo")
         or die($mysqli->error);    
     }
 
@@ -82,8 +73,8 @@ include '../conexion/conexion.php';
               <tr>
                 <td><?php echo $row['ID_ingredientes']?></td>
                 <td><?php echo $row['Nombre']?></td>
-                <td><?php echo $row['cantidad']?></td>
-                <td><?php echo $row['nombre']?></td>
+                <td><?php echo $row['cantidad1']?></td>
+                <td><?php echo $row['nombre1']?></td>
                 <td><?php echo $row['detalle']?></td>
                 <td><?php echo $row['precio']?></td>
               </tr>

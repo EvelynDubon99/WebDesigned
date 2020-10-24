@@ -1,13 +1,6 @@
 <?php 
 include '../conexion/conexion.php';
-session_start();
-if(!isset($_SESSION['rol'])){
-  header('location: /Intento/paginas/login.php');
-}else{
-  if($_SESSION['rol'] !=2 && $_SESSION['rol'] !=1){
-    header('location: /Intento/paginas/login.php');
-  }
-}
+require_once '../permisos/permiso.php';
     if(isset($_GET['read'])){
         $ID_ingredientes=$_GET['read'];
         $result = $mysqli->query("SELECT * FROM ingredientes WHERE ID_ingredientes =$ID_ingredientes ")
@@ -33,10 +26,9 @@ if(!isset($_SESSION['rol'])){
   </head>
   
   <body class="text-center">
-    <header>
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
+  <nav class="navbar navbar-expand-xl navbar_intems " id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+          <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
                <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
                <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>

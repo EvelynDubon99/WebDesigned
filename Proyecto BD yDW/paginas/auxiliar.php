@@ -1,5 +1,6 @@
 <?php
 session_start();
+ 
 if(isset($_SESSION['rol'])){
     switch($_SESSION['rol']){
       case 1:
@@ -11,10 +12,12 @@ if(isset($_SESSION['rol'])){
       break;
 
       case 3:
-        header('location: ../perfiles/usuario.php');
+        header('location: http://127.0.0.1/Intento/perfiles/usuario.php');
       break;
 
       default:
     }
+  }else {
+    echo "nada";
   }
 ?>

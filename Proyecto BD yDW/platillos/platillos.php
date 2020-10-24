@@ -1,13 +1,6 @@
 <?php
 require_once '../conexion/conexion.php';
-session_start();
-if(!isset($_SESSION['rol'])){
-  header('location: /Intento/paginas/login.php');
-}else{
-  if($_SESSION['rol'] !=2 && $_SESSION['rol'] !=1){
-    header('location: /Intento/paginas/login.php');
-  }
-}
+require_once '../permisos/permiso.php';
 
 
 ?>
@@ -31,11 +24,13 @@ if(!isset($_SESSION['rol'])){
   
   <body class="text-center">
     <header>
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
+    <nav class="navbar navbar-expand-xl navbar_intems " id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+          <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="../menu/catalogo.php">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../admin_pedido/admin_pedido.php">Pedidos</a>
+               <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
 
                 
@@ -56,12 +51,30 @@ if(!isset($_SESSION['rol'])){
       <div class= "container">  
       <div class="row">
           <div class="col-md-3">
-          <form action="insert.php" method="post" class="form-signin" id="form">
+          <form action="insert.php" method="post" class="form-signin" id="form" enctype='multipart/form-data'>
                 <h3 class="text-center"> Agregar Platillo </h3>
                 <hr>
-                <label class="sr-only">ID_status</label>
-                <input type="status" name="ID_status" id="ID_status" class="form-control" placeholder="Agregar ID Status">
-                <br>
+                <label class="">Status</label>
+                <?php $res = $mysqli->query("SELECT * FROM estatus ORDER BY ID_status DESC limit 2");
+                          $res2= mysqli_num_rows($res);
+                    ?>
+                    <select name="ID_status" class="form-control">
+                      <?php 
+                             if($res2 > 0){
+                               while($ID_status = mysqli_fetch_array($res)){
+                      
+                      ?> 
+                      <option value="<?php echo $ID_status['ID_status']?>"><?php echo $ID_status['status']?></option>
+                      <?php
+                               }
+                              }
+                      ?>
+                      
+                    </select>
+                  <br>
+                  <label class="">Imagen</label>
+                    <input type='file' name='image' class="form-control">
+                    <br>
 
                 <label class="sr-only">Nombre</label>
                 <input type="nombre" name="nombre" id="Nombre" class="form-control" placeholder="Nombre">
@@ -89,6 +102,7 @@ if(!isset($_SESSION['rol'])){
                 <tr>
                   <th>ID_platillo</th>
                   <th>ID_status</th>
+                  <th>Photo</th>
                   <th>Nombre</th>
                   <th>Precio</th>
                   <th>Detalle</th>
@@ -104,6 +118,9 @@ if(!isset($_SESSION['rol'])){
               <tr>
                 <td><?php echo $row['ID_platillo']?></td>
                 <td><?php echo $row['ID_status']?></td>
+                <td> <img width= "100px"src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
+                
+                </td>
                 <td><?php echo $row['nombre']?></td>
                 <td><?php echo $row['precio']?></td>
                 <td><?php echo $row['detalle']?></td>

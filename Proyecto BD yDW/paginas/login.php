@@ -2,21 +2,25 @@
   include '../conexion/conexion.php';
   session_start();
 
-  
+  if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+    header("location: ../perfiles/usuario.php");
+    exit;}
 
   if(isset($_POST['usuario']) && isset($_POST['contraseña'])){
       $usuario=$_POST['usuario'];
-      $contraseña=$_POST['contraseña'];
-      $resultado=$mysqli->query("SELECT * FROM usuario WHERE usuario = '".$usuario."' AND contraseña = '".$contraseña."'");
-      
+      $contraseña=$_POST['contraseña'];   
+      $resultado=$mysqli->query("SELECT * FROM usuario WHERE usuario = '".$usuario."'");
       $row = mysqli_fetch_assoc($resultado);
-      if($row == true){
+      $hash=$row['contraseña'];
+      if(password_verify($contraseña, $hash)){
         $_SESSION['rol']=$row['ID_role'];
         $_SESSION['ID']=$row['ID_user'];
         header('location: auxiliar.php');
       }else{
-        echo "el usuario o contrseña no existe";
+        
       }
+        
+
 
   }
 ?>
@@ -38,16 +42,20 @@
   
   <body class="text-center">
     <header >
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-            <div class="navbar-nav"> <a class="nav-item nav-link active" href="./Home.html">Home <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="./about.html">About</a> <a class="nav-item nav-link" href="#">Menu</a>
-                <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
+    <nav class="navbar navbar-expand-xl navbar_intems " id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+          <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
+            <div class="navbar-nav"> <a class="nav-item nav-link active" href="./Home.php">Home <span class="sr-only">(current)</span></a> 
+               <a class="nav-item nav-link" href="./about.html">About</a> <a class="nav-item nav-link" href="./menu.php">Menu</a>
+               <a class="nav-item nav-link" href="../paginas/contact.php"> Contact Us</a> <a class="nav-item nav-link" href="../paginas/preguntas.php"> Preguntas Frecuentes</a>
+               <a class="nav-item nav-link" href="./login.php"> Login</a> <a class="nav-item nav-link" href="./registry.php"> Sign up</a>
+                <a class="nav-item nav-link disabled" href="#"></a> </div> </div>
+              </nav>
+
     </header>
    
     
-    <section id="n1" style="background-image: url('../img/bg_8.1.jpg') !important; " >
+    <section id="n1" class="food_offer6" >
         <br>
         <br>
         <br>
@@ -56,7 +64,7 @@
                 <div class="col-4">
                 </div>
                 <div class="col-4">
-                    <form action="login.php" class="form-signin" method="post"id="form">
+                    <form action="login.php" class="form-signin" method="post" id="form">
                         <img src="../img/Logo.JPG" alt=80px width="80px" >
                          <h1 class="h3 mb-3 font-weight-normal"> Login</h1>
                         <hr>
@@ -74,6 +82,7 @@
                         <p class="text-center">
                             <br>
                             <a id="headerWhite" href="registry.php">Crear cuenta</a>
+                            <br>
                       </form>
                       <br>
                       
@@ -83,6 +92,7 @@
                 </div>
             </div>
     </section>
+   
     <footer class="page-footer font-small mdb-color pt-4" id="f">
 
       <!-- Footer Links -->

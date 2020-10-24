@@ -1,13 +1,6 @@
 <?php
 require_once '../conexion/conexion.php';
-session_start();
-if(!isset($_SESSION['rol'])){
-  header('location: /Intento/paginas/login.php');
-}else{
-  if($_SESSION['rol'] !=2 && $_SESSION['rol'] !=1){
-    header('location: /Intento/paginas/login.php');
-  }
-}
+require_once '../permisos/permiso.php';
 
 
 ?>
@@ -31,12 +24,17 @@ if(!isset($_SESSION['rol'])){
   
   <body class="text-center">
     <header>
-      <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
+    <nav class="navbar navbar-expand-xl navbar_intems " id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+          <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
                <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
                <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
+                <form class="form-inline my-2 my-lg-0" metho="GET" >
+                <input class="form-control mr-sm-2"  name="search" type="search" placeholder="Search" aria-label="Search">
+                <input type="submit" name="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" id="primary">
+                </form>
+                
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
               <nav>
                 <div class ="container-fluid">
@@ -69,8 +67,25 @@ if(!isset($_SESSION['rol'])){
           <form action="insert.php" method="post" class="form-signin" id="form">
                 <h3 class="text-center"> Agregar Ingredientes </h3>
                 <hr>
-                <label class="sr-only">ID_status</label>
-                <input type="text" name="ID_status" id="ID_status" class="form-control" placeholder="Agregar ID Status">
+                <label class="">Status</label>
+                <br>
+                <?php $res = $mysqli->query("SELECT * FROM estatus limit 2");
+                          $res2= mysqli_num_rows($res);
+                    ?>
+                    <select name="ID_status" class="form-control">
+                      <?php 
+                             if($res2 > 0){
+                               while($ID_status = mysqli_fetch_array($res)){
+                      
+                      ?> 
+                      <option value="<?php echo $ID_status['ID_status']?>"><?php echo $ID_status['status']?></option>
+                      <?php
+                               }
+                              }
+                      ?>
+                      
+                    </select>
+
                 <br>
                 <label class="sr-only">Nombre</label>
                 <input type="text" name="Nombre" id="Nombre" class="form-control" placeholder="Nombre">
@@ -88,6 +103,7 @@ if(!isset($_SESSION['rol'])){
           </div>
           <div class="col-md-8">
           <h3 class="text-center"> Ingredientes Completos </h3>
+            
           <div class=" table-responsive-md">
             <table class="table table-bordered table-hover">
             <thead>
@@ -103,7 +119,12 @@ if(!isset($_SESSION['rol'])){
             <tbody>
               <?php
                 include '../conexion/conexion.php';
-                $result = $mysqli->query("SELECT * FROM ingredientes") or die($mysqli->error);
+                if(isset($_GET['submit'])){
+                  $nombre = $_GET['search'];
+                  $result=$mysqli->query("SELECT * FROM ingredientes where nombre = '$nombre'");
+                  }else {
+                    $result = $mysqli->query("SELECT * FROM ingredientes") or die($mysqli->error);
+                  }
                 while ($row = mysqli_fetch_assoc($result)){
               ?>
               <tr>

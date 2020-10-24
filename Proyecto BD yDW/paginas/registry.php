@@ -1,4 +1,13 @@
-<?php include '../conexion/conexion.php';
+<?php 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+require '../paginas/Exception.php';
+require '../paginas/PHPMailer.php';
+require '../paginas/SMTP.php';
+include '../conexion/conexion.php';
+
+
 if(isset($_POST['crear'])){
   $ID_role =$_POST['ID_role'];
   $nombre = $_POST['nombre'];
@@ -13,23 +22,50 @@ if(isset($_POST['crear'])){
   }
   $apellido = $_POST['apellido'];
   $correo = $_POST['correo'];
-  $contraseña = $_POST['contraseña'];
+  $contraseña=$_POST['contraseña'];
+  $contraseña_h = password_hash($contraseña, PASSWORD_DEFAULT);
   $telefono = $_POST['telefono'];
   $direccion = $_POST['direccion'];
   $mysqli->query("INSERT INTO usuario( ID_role, nombre , usuario ,apellido, correo, contraseña, telefono, direccion) 
-  VALUES( '3','".$nombre."','".$usuario."','".$apellido."','".$correo."','".$contraseña."','".$telefono."','".$direccion."')")
+  VALUES( '3','".$nombre."','".$usuario."','".$apellido."','".$correo."','".$contraseña_h."','".$telefono."','".$direccion."')")
   or die($mysqli->error);
+  $mail = new PHPMailer(true);
 
-  header("Location: Home.html");
+try {
+    //Server settings
+    $mail->SMTPDebug = 0;                      // Enable verbose debug output
+    $mail->isSMTP();                                            // Send using SMTP
+    $mail->Host       = 'smtp.gmail.com';                    // Set the SMTP server to send through
+    $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+    $mail->Username   = 'dubon181014@unis.edu.gt';                     // SMTP username
+    $mail->Password   = 'evelyn201099';                               // SMTP password
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+    $mail->Port       = 587;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
-}else{
- 
+    //Recipients
+    $mail->setFrom('dubon181014@unis.edu.gt', 'Eve');
+    $mail->addAddress($correo, $nombre);     // Add a recipient
+
+
+    // Content
+    $mail->isHTML(true);                                  // Set email format to HTML
+    $mail->Subject = 'Registrado';
+    $mail->Body    = 'Welcome to The Zaguan';
+   
+
+    $mail->send();
+    echo 'Message has been sent';
+} catch (Exception $e) {
+    echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
 
 
-//Verificar que el usuario se repita
+  header("Location: Home.php");
 
-
+        
+}else{
+ 
+}
 
 ?>
 <!doctype html>
@@ -47,16 +83,20 @@ if(isset($_POST['crear'])){
   </head>
   <body class="text-center">
     <header >
-    <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
-            <div class="navbar-nav"> <a class="nav-item nav-link active" href="./Home.html">Home <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="./about.html">About</a> <a class="nav-item nav-link" href="#">Menu</a>
+    <nav class="navbar navbar-expand-xl navbar_intems " id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+          <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
+            <div class="navbar-nav"> <a class="nav-item nav-link active" href="./Home.php">Home <span class="sr-only">(current)</span></a> 
+               <a class="nav-item nav-link" href="./about.html">About</a> <a class="nav-item nav-link" href="./menu.php">Menu</a>
+               <a class="nav-item nav-link" href="../paginas/contact.php"> Contact Us</a> <a class="nav-item nav-link" href="../paginas/preguntas.php"> Preguntas Frecuentes</a>
+               <a class="nav-item nav-link" href="./login.php"> Login</a> <a class="nav-item nav-link" href="./registry.php"> Sign up</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div>
+              </nav>
+
     </header>
    
     
-    <section id="n1" style="background-image: url('../img/bg_7.jpg') !important; ">
+    <section id="n1"class="food_offer7">
       <br>
       <br>
       <br>

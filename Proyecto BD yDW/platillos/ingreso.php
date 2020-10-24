@@ -1,20 +1,13 @@
 <?php 
 include '../conexion/conexion.php';
-session_start();
-if(!isset($_SESSION['rol'])){
-  header('location: /Intento/paginas/login.php');
-}else{
-  if($_SESSION['rol'] !=2 && $_SESSION['rol'] !=1){
-    header('location: /Intento/paginas/login.php');
-  }
-}
+require_once '../permisos/permiso.php';
 
     if(isset($_POST['insert'])){
         $ID_platillo = $_POST['ID_platillo'];
         $ID_ingredientes = $_POST['ID_ingredientes'];
         $cantidad =$_POST['cantidad']; 
-        $mysqli->query("INSERT INTO detalle_platillo(ID_platillo, ID_ingredientes, cantidad) 
-        VALUES('".$ID_platillo."','".$ID_ingredientes."','".$cantidad."')")
+        $mysqli->query("INSERT INTO detalle_platillo (ID_platillo, ID_ingredientes, cantidad)
+        VALUES('".$ID_platillo."', '".$ID_ingredientes."','".$cantidad."')" ) 
         or die($mysqli->error);
 
         header("Location: platillos.php");
@@ -40,9 +33,9 @@ if(!isset($_SESSION['rol'])){
   
   <body class="text-center">
         <header>
-        <nav class="navbar navbar-expand-xl navbar-dark bg-dark" id="l"> <a class="navbar-brand" href="#">The Zaguan</a> 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
-          <span class="navbar-toggler-icon"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup"> 
+        <nav class="navbar navbar-expand-xl navbar_intems " id="l"> <img src="../img/Logo.JPG" alt=80px width="80px"><a class="navbar-brand" href="#">The Zaguan</a> 
+        <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
+          <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
                <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
@@ -69,13 +62,43 @@ if(!isset($_SESSION['rol'])){
                 
                     <h3 class="text-center"> Agregar Platillo </h3>
                     <hr>
-                    <label class="sr-only">ID_platillo</label>
-                    <input type="ID_platillo" name="ID_platillo" id="ID_platillo" class="form-control" placeholder="ID_platillo">
+                    <label class="">Platillo</label>
+                    <?php $res = $mysqli->query("SELECT * FROM platillo");
+                          $res2= mysqli_num_rows($res);
+                    ?>
+                    <select name="ID_platillo" class="form-control">
+                      <?php 
+                             if($res2 > 0){
+                               while($ID_platillo = mysqli_fetch_array($res)){
+                      
+                      ?> 
+                      <option value="<?php echo $ID_platillo['ID_platillo']?>"><?php echo $ID_platillo['nombre']?></option>
+                      <?php
+                               }
+                              }
+                      ?>
+                      
+                    </select>
                     <br>
-                    <label class="sr-only">ID_ingrediente</label>
-                    <input type="ID_ingrediente" name="ID_ingredientes" id="ID_ingrediente" class="form-control" placeholder="ID_ingrediente">
+                    <label class="">Ingrediente</label>
+                    <?php $res3 = $mysqli->query("SELECT * FROM ingredientes");
+                          $res4= mysqli_num_rows($res3);
+                    ?>
+                    <select name="ID_ingredientes" class="form-control">
+                      <?php 
+                             if($res4 > 0){
+                               while($ID = mysqli_fetch_array($res3)){
+                      
+                      ?> 
+                      <option value="<?php echo $ID['$ID_ingredientes']?>"><?php echo  $ID['Nombre']?></option>
+                      <?php
+                               }
+                              }
+                      ?>
+                      
+                    </select>
                     <br>
-                    <label class="sr-only">Cantidad</label>
+                    <label class="">Cantidad</label>
                     <input type="Cantidad" name="cantidad" id="Cantidad" class="form-control" placeholder="Cantidad">
                     <br>
                     <input type="submit" name="insert" value="Añadir" class="btn btn-lg btn-primary btn-block" id="primary">
