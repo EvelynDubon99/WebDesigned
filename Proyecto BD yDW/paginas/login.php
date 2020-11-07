@@ -12,6 +12,7 @@
       $resultado=$mysqli->query("SELECT * FROM usuario WHERE usuario = '".$usuario."'");
       $row = mysqli_fetch_assoc($resultado);
       $hash=$row['contraseña'];
+      $resul=$mysqli->query("UPDATE usuario set fecha = NOW() WHERE usuario = '".$usuario."'");
       if(password_verify($contraseña, $hash)){
         $_SESSION['rol']=$row['ID_role'];
         $_SESSION['ID']=$row['ID_user'];
@@ -19,7 +20,7 @@
       }else{
         
       }
-        
+    
 
 
   }
@@ -55,13 +56,14 @@
     </header>
    
     
-    <section id="n1" class="food_offer6" >
+    <section id="n1">
         <br>
         <br>
         <br>
         <div class="container">
             <div class="row">
                 <div class="col-4">
+                
                 </div>
                 <div class="col-4">
                     <form action="login.php" class="form-signin" method="post" id="form">

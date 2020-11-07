@@ -90,7 +90,7 @@ if(isset($_POST['enviar'])){
       </section>
       
      
-      <section id="n1" class="food_offer8">
+      <section id="n1" >
       <br>
     <div class="container">
         <div class="row">

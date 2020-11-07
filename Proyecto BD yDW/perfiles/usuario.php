@@ -36,7 +36,9 @@ $row=mysqli_fetch_assoc($resultado);
                <a class="nav-item nav-link" href="../paginas/about.html">About</a> <a class="nav-item nav-link" href="../paginas/menu.php">Menu</a>
                <a class="nav-item nav-link" href="../paginas/contact.php"> Contact Us</a> <a class="nav-item nav-link" href="../paginas/preguntas.php"> Preguntas Frecuentes</a>
                <a class="nav-item nav-link" href="../ordenar/orde.php"> Carrito</a>
-               <a class="nav-item nav-link" href="../perfiles/usuario.php"> Perfil</a> <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
+               <a class="nav-item nav-link" href="../ordenar/pedido.php"> Perfil</a> 
+               <a class="nav-item nav-link" href="../ordenar/pedido.php">Pedido</a>  
+               <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div>
               </nav>
     </header>

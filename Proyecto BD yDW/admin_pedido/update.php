@@ -32,7 +32,10 @@ error_reporting (E_ALL ^ E_NOTICE);
         <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
           <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="../menu/catalogo.php">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../admin_pedido/admin_pedido.php">Pedido</a>
+               <a class="nav-item nav-link" href="../perfiles/perfiles.php">Perfil</a>
+               <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
     </header>
    
@@ -51,7 +54,7 @@ error_reporting (E_ALL ^ E_NOTICE);
                     <hr>
                     <input type="hidden" name="ID_pedido" id="ID_pedido" value="<?php echo $row['ID_pedido']; ?>">
                     <label class="">ID_status</label>
-                      <?php $res = $mysqli->query("SELECT * FROM estatus ORDER BY ID_status DESC limit 3");
+                      <?php $res = $mysqli->query("SELECT * FROM estatus ORDER BY ID_status DESC limit 4");
                             $res2= mysqli_num_rows($res);
                       ?>
                       <select name="ID_status" class="form-control">
@@ -67,6 +70,8 @@ error_reporting (E_ALL ^ E_NOTICE);
                         ?>
                         
                       </select>
+                      <br>
+                      <textarea placeholder="Comentario" name="comentario" class="form-control"></textarea>
                     <br>
                     <input type="submit" name="submit" value="Actualizar" class="btn btn-lg btn-primary btn-block" id="primary">
                 </from>
@@ -78,8 +83,9 @@ error_reporting (E_ALL ^ E_NOTICE);
                     
                     $ID_pedido= $_GET['ID_pedido'];
                     $ID_status =$_GET['ID_status'];
+                    $Comentario =$_GET['comentario'];
                     if($ID_status!=null ){
-                        $result = $mysqli->query("UPDATE pedido SET ID_status = '".$ID_status."' 
+                        $result = $mysqli->query("UPDATE pedido SET ID_status = '".$ID_status."', Comentario = '".$Comentario."' 
                         WHERE ID_pedido = '".$ID_pedido."'");
                         if ($ID_status=1){
                             header("Location: admin_pedido.php");

@@ -1,5 +1,6 @@
 <?php 
 include '../conexion/conexion.php';
+require_once '../permisos/permiso.php';
 if(isset($_POST['crear'])){
   $ID_role =$_POST['ID_role'];
   $nombre = $_POST['nombre'];
@@ -12,18 +13,12 @@ if(isset($_POST['crear'])){
     </script>';
 
   }
-  $apellido = $_POST['apellido'];
-  $correo = $_POST['correo'];
   $contraseña=$_POST['contraseña'];
   $contraseña_h = password_hash($contraseña, PASSWORD_DEFAULT);
-  $telefono = $_POST['telefono'];
-  $direccion = $_POST['direccion'];
-  $mysqli->query("INSERT INTO usuario( ID_role, nombre , usuario ,apellido, correo, contraseña, telefono, direccion) 
-  VALUES( '".$ID_role."','".$nombre."','".$usuario."', 'vacio', 'vacio','".$contraseña_h."','0','vacio')")
+  $mysqli->query("INSERT INTO usuario( ID_role, nombre , usuario ,apellido, correo, contraseña, telefono, direccion, fecha) 
+  VALUES( '".$ID_role."','".$nombre."','".$usuario."', 'vacio', 'vacio','".$contraseña_h."','0','vacio', NOW())")
   or die($mysqli->error);
- 
-
-
+  header("Location: informacion.php");
 
   
         
@@ -52,13 +47,15 @@ if(isset($_POST['crear'])){
           <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
                <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="../menu/catalogo.php">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../admin_pedido/admin_pedido.php">Pedido</a>
+               <a class="nav-item nav-link" href="../perfiles/perfiles.php">Perfil</a>
                <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
 
     </header>
    
     
-    <section id="n1"class="food_offer7">
+    <section id="n1">
       <br>
       <br>
       <br>

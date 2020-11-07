@@ -1,6 +1,7 @@
 <?php
     include '../conexion/conexion.php';
-    include '../permisos/permisos_lo.php';
+    session_start();
+
 
     if (isset($_POST["add"])){
         if (isset($_SESSION["cart"])){
@@ -67,7 +68,13 @@
                <a class="nav-item nav-link" href="../paginas/about.html">About</a> <a class="nav-item nav-link" href="../paginas/menu.php">Menu</a>
                <a class="nav-item nav-link" href="../paginas/contact.php"> Contact Us</a> <a class="nav-item nav-link" href="../paginas/preguntas.php"> Preguntas Frecuentes</a>
                <a class="nav-item nav-link" href="../ordenar/orde.php"> Carrito</a>
-               <a class="nav-item nav-link" href="../perfiles/usuario.php"> Perfil</a> <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
+               <a class="nav-item nav-link" href="../perfiles/usuario.php"> Perfil</a> 
+               <a class="nav-item nav-link" href="../ordenar/pedido.php">Pedido</a>  
+               <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
+               <form class="form-inline my-2 my-lg-0" metho="GET" action="buscar.php" >
+                <input class="form-control mr-sm-2"  name="search" type="search" placeholder="Search" aria-label="Search">
+                <input type="submit" name="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" id="primary">
+                </form>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div>
               </nav>
                     
@@ -125,25 +132,27 @@
        
     </div>
 </div>
-    
+
 </section>
 <br>
+
 <section>
       <div class="food_menu">
           <div class="container">
             <div class="row">
               <div class="col-md-12">
-              <h3>Special</h3>
+              
               <hr>
               <br>
               </div>
               <?php 
-                    $result = $mysqli->query("SELECT p.nombre, p.detalle, p.img, p.precio, p.ID_platillo FROM platillo p inner join menu m 
-                    on p.ID_platillo= m.ID_platillo WHERE m.Tiempo_comida='Especial';") or die($mysqli->error);
+                    $result = $mysqli->query("SELECT p.nombre, p.detalle, p.img, p.precio, p.ID_platillo, m.Tiempo_comida FROM platillo p inner join menu m 
+                    on p.ID_platillo= m.ID_platillo ORDER BY m.Tiempo_comida DESC;") or die($mysqli->error);
                     if(mysqli_num_rows($result) > 0) {
                         while ($row = mysqli_fetch_assoc($result)){
                     ?>
                   <div class="col-md-3">
+                  <h3><?php echo $row["Tiempo_comida"]; ?></h3>
                   <form method="post" action="orde.php?action=add&id=<?php echo $row["ID_platillo"]; ?>"  class="form-signin2">
                    <img  id="photo_menu" src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
                    <h5 class="menu-item"> <?php echo $row['nombre']?></h5> 
@@ -159,104 +168,7 @@
                     }?>
       </section>
       <br>
-      <section>
-        <div class="food_menu">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12">
-                <h3>Breakfast</h3>
-                <hr>
-                <br>
-                </div>
-                <?php 
-                    $result = $mysqli->query("SELECT p.nombre, p.detalle, p.img, p.precio, p.ID_platillo FROM platillo p inner join menu m 
-                    on p.ID_platillo= m.ID_platillo WHERE m.Tiempo_comida='Desayuno';") or die($mysqli->error);
-                        if(mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)){
-                    ?>
-                  <div class="col-md-3">
-                  <form method="post" action="orde.php?action=add&id=<?php echo $row["ID_platillo"]; ?>" class="form-signin2">
-                   <img  id="photo_menu" src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
-                   <h5 class="menu-item"> <?php echo $row['nombre']?></h5> 
-                          <b><span class="menu_price">Q. <?php echo $row['precio']?>.00</span></b>
-                          <input type="number" name="quantity"  min="0" max="10" step="1" value="1" class="form-control">
-                            <input type="hidden" name="hidden_name" value="<?php echo $row["nombre"]; ?>">
-                            <input type="hidden" name="hidden_price" value="<?php echo $row["precio"]; ?>">
-                            <br>
-                            <input type="submit" name="add"  class="offer-btn2" value="Add to Cart" >
-                  </form>
-                  </div>
-                    <?php }
-                    }?>
-                
-        </section>
-        <br>
-        <section>
-          <div class="food_menu">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-12">
-                  <h3>Lunches</h3>
-                  <hr>
-                  <br>
-                  </div>
-                  <?php 
-                    $result = $mysqli->query("SELECT p.nombre, p.detalle, p.img, p.precio, p.ID_platillo FROM platillo p inner join menu m 
-                    on p.ID_platillo= m.ID_platillo WHERE m.Tiempo_comida='Almuerzo';") or die($mysqli->error);
-                    if(mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)){
-                    ?>
-                  <div class="col-md-3">
-                  <form method="post" action="orde.php?action=add&id=<?php echo $row["ID_platillo"]; ?>" class="form-signin2" >
-                   <img  id="photo_menu" src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
-                   <h5 class="menu-item"> <?php echo $row['nombre']?></h5> 
-                          <b><span class="menu_price">Q. <?php echo $row['precio']?>.00</span></b>
-                          <br>
-                          <input type="number" name="quantity"  min="0" max="10" step="1" value="1" class="form-control">
-                            <input type="hidden" name="hidden_name" value="<?php echo $row["nombre"]; ?>">
-                            <input type="hidden" name="hidden_price" value="<?php echo $row["precio"]; ?>">
-                            <br>
-                            <input type="submit" name="add" class="offer-btn2" value="Add to Cart"  >
-                    </form>
-                  </div>
-                    <?php }
-                    }?>
-
-          <br>
-
-            <div class="food_menu">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-12">
-                    <h3>Dinner</h3>
-                    <hr>
-                    <br>
-                    </div>
-                    <?php 
-                    $result = $mysqli->query("SELECT p.nombre, p.detalle, p.img, p.precio, p.ID_platillo FROM platillo p inner join menu m 
-                    on p.ID_platillo= m.ID_platillo WHERE m.Tiempo_comida='Cena';") or die($mysqli->error);
-                    if(mysqli_num_rows($result) > 0) {
-                        while ($row = mysqli_fetch_assoc($result)){
-                    ?>
-                  <div class="col-md-3">
-                    <form method="post" action="orde.php?action=add&id=<?php echo $row["ID_platillo"]; ?>" class="form-signin2" >
-                        <img  id="photo_menu" src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
-                        <h5 class="menu-item"> <?php echo $row['nombre']?></h5> 
-                        <b><span class="menu_price">Q. <?php echo $row['precio']?>.00</span></b>
-                        <br>
-                        <input type="number" name="quantity"  min="0" max="10" step="1" value="1" class="form-control">
-                        <input type="hidden" name="hidden_name" value="<?php echo $row["nombre"]; ?>">
-                        <input type="hidden" name="hidden_price" value="<?php echo $row["precio"]; ?>">
-                        <br>
-                        <input type="submit" name="add" class="offer-btn2" value="Add to Cart" >
-                    </form>
-                  </div>
-                    <?php }
-                    }?>
-            </section>
-<br>
- 
-   
+     
     <footer class="page-footer font-small mdb-color pt-4" id="f">
       <div class="container text-center text-md-left">
         <div class="row text-center text-md-left mt-3 pb-3">

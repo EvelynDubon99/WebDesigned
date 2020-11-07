@@ -26,7 +26,9 @@
                <a class="nav-item nav-link" href="../paginas/about.html">About</a> <a class="nav-item nav-link" href="../paginas/menu.php">Menu</a>
                <a class="nav-item nav-link" href="../paginas/contact.php"> Contact Us</a> <a class="nav-item nav-link" href="../paginas/preguntas.php"> Preguntas Frecuentes</a>
                <a class="nav-item nav-link" href="../ordenar/orde.php"> Carrito</a>
-               <a class="nav-item nav-link" href="../perfiles/usuario.php"> Perfil</a> <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
+               <a class="nav-item nav-link" href="../perfiles/usuario.php"> Perfil</a> 
+               <a class="nav-item nav-link" href="../ordenar/pedido.php">Pedido</a> 
+               <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div>
               </nav>
                     
@@ -38,11 +40,16 @@
             $total = $total + ($value["item_quantity"] * $value["product_price"]);
         }
     }?>
-        <section>
-                <div class="col-md-4">
-                </div>
-                <div class="col-md-4">
-                            <form class="form-signin" id="form"  action="insert.php" metho="POST">
+  <section id="n1">
+      <br>
+      <br>
+      <br>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+            </div>
+            <div class="col-4">
+            <form class="form-signin" id="form"  action="insert.php" metho="POST">
                                 <h1 class="h4 mb-4 font-weight-normal"> Forma de pago</h1>
                                     
                                 <hr>
@@ -64,11 +71,16 @@
                                     <button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" id="primary" name="submit"> Pagar</button>
                                 
                             </form> 
-                </div>
-                <div class="col-md-4">
-                </div>
-        </section>
-<br>
+                <br>
+
+
+            </div>
+            <div class="col-4">
+               
+        </div>
+    </div>
+    </div>
+  </section>
  
    
     <footer class="page-footer font-small mdb-color pt-4" id="f">

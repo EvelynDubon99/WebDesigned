@@ -26,8 +26,8 @@ if(isset($_POST['crear'])){
   $contraseña_h = password_hash($contraseña, PASSWORD_DEFAULT);
   $telefono = $_POST['telefono'];
   $direccion = $_POST['direccion'];
-  $mysqli->query("INSERT INTO usuario( ID_role, nombre , usuario ,apellido, correo, contraseña, telefono, direccion) 
-  VALUES( '3','".$nombre."','".$usuario."','".$apellido."','".$correo."','".$contraseña_h."','".$telefono."','".$direccion."')")
+  $mysqli->query("INSERT INTO usuario( ID_role, nombre , usuario ,apellido, correo, contraseña, telefono, direccion, fecha) 
+  VALUES( '3','".$nombre."','".$usuario."','".$apellido."','".$correo."','".$contraseña_h."','".$telefono."','".$direccion."', NOW())")
   or die($mysqli->error);
   $mail = new PHPMailer(true);
 
@@ -96,7 +96,7 @@ try {
     </header>
    
     
-    <section id="n1"class="food_offer7">
+    <section id="n1">
       <br>
       <br>
       <br>

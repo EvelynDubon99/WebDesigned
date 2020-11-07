@@ -1,4 +1,6 @@
-
+@mixin color {
+  background-color: #f6cd61;
+}
   .navbar-brand{
     color:black;
   }
@@ -21,7 +23,7 @@
   .offer-btn {
     display: inline-block;
     text-decoration: none;
-    color:#f6cd61;
+    @include color;
     background-color: #fff;
     padding: 10px 25px;
     margin-top: 15px;

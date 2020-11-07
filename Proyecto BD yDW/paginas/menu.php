@@ -39,21 +39,35 @@
       <br>
       <br>
       <section>
+      <div class="container">
+        <div class="row">
+            <div class="col-3">
+              <a href="../subhome/epeciales.php" class="offer-btn2"> Especial</a>
+              <a href="../subhome/desayunos.php" class="offer-btn2"> Desayuno</a>
+            </div>
+            <div class="col-3">
+              <a href="../subhome/almuerzos.php" class="offer-btn2"> Almuerzo</a>
+              <a href="../subhome/cenas.php" class="offer-btn2"> Cena</a>
+            </div>
+        </div>
+      <div>
+    </section>
+    <br>
+    <br>
+      <section>
+     
       <div class="food_menu">
           <div class="container">
             <div class="row">
-              <div class="col-md-12">
-              <h3>Special</h3>
-              <hr>
-              </div>
               <?php 
-                    $result = $mysqli->query("SELECT * FROM vista_menu WHERE  Tiempo_comida='Especial' and ID_status = 3 ;") or die($mysqli->error);
-                    while ($row = mysqli_fetch_assoc($result)){
-                    ?>
+                $result = $mysqli->query("SELECT * FROM `vista_menu`  where ID_status = 3
+                ORDER BY `vista_menu`.`Tiempo_comida` DESC ") or die($mysqli->error);
+                  while ($row = mysqli_fetch_assoc($result)){
+            ?>
                   <div class="col-md-3">
-                    
+                  <br>
                    <img  id="photo_menu" src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
-                   <h3 class="menu-item"> <?php echo $row['nombre']?></h3> 
+                   <h4 class="menu-item"> <?php echo $row['nombre']?></h4> 
                           <b><span class="menu_price">Q. <?php echo $row['precio']?>.00</span></b>
                           <br>
                           <a href="../ordenar/pagina_detalle.php?read=<?php echo $row['ID_platillo']?> " class="offer-btn2">Ver mas</a>
@@ -62,78 +76,6 @@
                     <?php }?>
       </section>
       <br>
-      <section>
-        <div class="food_menu">
-            <div class="container">
-              <div class="row">
-                <div class="col-md-12">
-                <h3>Breakfast</h3>
-                <hr>
-                </div>
-                <?php 
-                    $result = $mysqli->query("SELECT * FROM vista_menu WHERE Tiempo_comida='Desayuno' and ID_status = 3;") or die($mysqli->error);
-                    while ($row = mysqli_fetch_assoc($result)){
-                    ?>
-                  <div class="col-md-3">
-                    
-                   <img  id="photo_menu" src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
-                   <h3 class="menu-item"> <?php echo $row['nombre']?></h3> 
-                          <b><span class="menu_price">Q. <?php echo $row['precio']?>.00</span></b>
-                          <br>
-                          <a href="../ordenar/pagina_detalle.php?read=<?php echo $row['ID_platillo']?> " class="offer-btn2">Ver mas</a>
-                          <br>
-                  </div>
-                    <?php }?>
-                
-        </section>
-        <br>
-        <section>
-          <div class="food_menu">
-              <div class="container">
-                <div class="row">
-                  <div class="col-md-12">
-                  <h3>Lunches</h3>
-                  <hr>
-                  </div>
-                  <?php 
-                    $result = $mysqli->query("SELECT * FROM vista_menu WHERE Tiempo_comida='Almuerzo' and ID_status = 3;") or die($mysqli->error);
-                    while ($row = mysqli_fetch_assoc($result)){
-                    ?>
-                  <div class="col-md-3">
-                    
-                   <img  id="photo_menu" src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
-                   <h3 class="menu-item"> <?php echo $row['nombre']?></h3> 
-                          <b><span class="menu_price">Q. <?php echo $row['precio']?>.00</span></b>
-                          <br>
-                          <a href="../ordenar/pagina_detalle.php?read=<?php echo $row['ID_platillo']?> " class="offer-btn2">Ver mas</a>
-                          <br>
-                  </div>
-                    <?php }?>
-          </section>
-          <br>
-          <section>
-            <div class="food_menu">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-12">
-                    <h3>Dinner</h3>
-                    <hr>
-                    </div>
-                    <?php 
-                    $result = $mysqli->query("SELECT * FROM vista_menu WHERE Tiempo_comida='Cena' and ID_status = 3;") or die($mysqli->error);
-                    while ($row = mysqli_fetch_assoc($result)){
-                    ?>
-                  <div class="col-md-3">
-                    
-                   <img  id="photo_menu" src="data: <?php echo $tipo['tipo_img']?>;base64,<?php echo base64_encode($row['img'])?>">
-                   <h3 class="menu-item"> <?php echo $row['nombre']?></h3> 
-                          <b><span class="menu_price">Q. <?php echo $row['precio']?>.00</span></b>
-                          <br>
-                          <a href="../ordenar/pagina_detalle.php?read=<?php echo $row['ID_platillo']?> " class="offer-btn2">Ver mas</a>
-                          <br>
-                  </div>
-                    <?php }?>
-            </section>
             <br>
     <footer class="page-footer font-small mdb-color pt-4" id="f">
       <div class="container text-center text-md-left">

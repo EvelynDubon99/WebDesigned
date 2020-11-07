@@ -28,8 +28,11 @@ require_once '../permisos/permiso.php';
         <button class="navbar-toggler custom-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation"> 
           <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
-               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="#">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="../menu/catalogo.php">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../admin_pedido/admin_pedido.php">Pedido</a>
+               <a class="nav-item nav-link" href="../perfiles/perfiles.php">Perfil</a>
                <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
+
                 <form class="form-inline my-2 my-lg-0" metho="GET" >
                 <input class="form-control mr-sm-2"  name="search" type="search" placeholder="Search" aria-label="Search">
                 <input type="submit" name="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" id="primary">

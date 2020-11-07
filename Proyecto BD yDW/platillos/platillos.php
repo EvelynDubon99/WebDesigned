@@ -30,7 +30,12 @@ require_once '../permisos/permiso.php';
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
                <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="../menu/catalogo.php">Catalogo de Menú</a>
                <a class="nav-item nav-link" href="../admin_pedido/admin_pedido.php">Pedidos</a>
+               <a class="nav-item nav-link" href="../perfiles/perfiles.php">Perfil</a>
                <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
+                <form class="form-inline my-2 my-lg-0" metho="GET" >
+                <input class="form-control mr-sm-2"  name="search" type="search" placeholder="Search" aria-label="Search">
+                <input type="submit" name="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" id="primary">
+                </form>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
 
                 
@@ -112,8 +117,13 @@ require_once '../permisos/permiso.php';
             <tbody>
               <?php
                 include '../conexion/conexion.php';
-                $result = $mysqli->query("SELECT * FROM platillo ") or die($mysqli->error);
-                while ($row = mysqli_fetch_assoc($result)){
+                if(isset($_GET['submit'])){
+                  $nombre = $_GET['search'];
+                  $result=$mysqli->query("SELECT * FROM platillo where (nombre LIKE '%$nombre%' OR detalle LIKE '%$nombre%' )");
+                  }else {
+                    $result = $mysqli->query("SELECT * FROM platillo") or die($mysqli->error);
+                  }
+                  while ($row = mysqli_fetch_assoc($result)){
               ?>
               <tr>
                 <td><?php echo $row['ID_platillo']?></td>

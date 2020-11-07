@@ -29,7 +29,14 @@ require_once '../permisos/permiso.php';
           <span class="navbar-toggler-icon" id="narv"></span> </button> <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav"> <a class="nav-item nav-link active" href="../ingredientes/ingredientes.php">Ingredientes <span class="sr-only">(current)</span></a> 
                <a class="nav-item nav-link" href="../platillos/platillos.php">Platillos</a> <a class="nav-item nav-link" href="../menu/catalogo.php">Catalogo de Menú</a>
+               <a class="nav-item nav-link" href="../admin_pedido/admin_pedido.php">Pedido</a>
+               <a class="nav-item nav-link" href="../perfiles/perfiles.php">Perfil</a>
                <a class="nav-item nav-link" href="../paginas/logout.php"> OUT</a>
+                
+               <form class="form-inline my-2 my-lg-0" metho="GET" >
+                <input class="form-control mr-sm-2"  name="search" type="search" placeholder="Search" aria-label="Search">
+                <input type="submit" name="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" id="primary">
+                </form>
                 <a class="nav-item nav-link disabled" href="#"></a> </div> </div> </nav>
 
                 
@@ -37,7 +44,7 @@ require_once '../permisos/permiso.php';
                 <div class ="container-fluid">
                   <div class="row justify-content-center">
                     <div class= "col-md-10">
-                      <h3 class="text-center mt-2"> Platillos </h3>
+                      <h3 class="text-center mt-2"> Pedidos </h3>
                       <hr>
                     </div>
                   </div>
@@ -50,7 +57,6 @@ require_once '../permisos/permiso.php';
       <div class= "container">  
       <div class="row">
           <div class="col-md-12">
-          <h3 class="text-center"> Pedidos </h3>
           <div class=" table-responsive-md">
             <table class="table table-bordered table-hover">
             <thead>
@@ -60,21 +66,29 @@ require_once '../permisos/permiso.php';
                   <th>Platillo</th>
                   <th>Estado</th>
                   <th>Cantidad</th>
+                  <th>Comentario</th>
                   <th>Accion</th>
                 </tr>
             </thead>
             <tbody>
               <?php
                 include '../conexion/conexion.php';
-                $result = $mysqli->query("SELECT * FROM pedidos") or die($mysqli->error);
+                if(isset($_GET['submit'])){
+                  $nombre = $_GET['search'];
+                  $result=$mysqli->query("SELECT * FROM pedidos where (usuario LIKE '%$nombre%' OR nombre1 LIKE '%$nombre%' or Cantidad LIKE '%$nombre%')");
+                  }else {
+                    $result = $mysqli->query("SELECT * FROM pedidos") or die($mysqli->error);
+                  }
+                
                 while ($row = mysqli_fetch_assoc($result)){
               ?>
               <tr>
                 <td><?php echo $row['ID_pedido']?></td>
-                <td> <?php echo $row['nombre']?></td>
+                <td><?php echo $row['usuario']?></td>
                 <td><?php echo $row['nombre1']?></td>
-                <td><?php echo $row['ID_status']?></td>
+                <td><?php echo $row['status']?></td>
                 <td><?php echo $row['Cantidad']?></td>
+                <td><?php echo $row['Comentario']?></td>
                 <td>
                 <a href="update.php?edit=<?php echo $row['ID_pedido']?> " class="badge badge-primary">Edit</a>
                 <a href="delet.php?delete=<?php echo $row['ID_pedido']?>" class="badge badge-danger">Delete</a>
